@@ -104,12 +104,17 @@ class FrappeClient(object):
 		params = {}
 		if filters:
 			params["filters"] = json.dumps(filters)
-                if fields:
-                        params["fields"] = json.dumps(fields)
+		if fields:
+			params["fields"] = json.dumps(fields)
 
 		res = self.session.get(self.url + "/api/resource/" + doctype + "/" + name,
 			params=params)
 
+		return self.post_process(res)
+
+	def get_resource(self, resource, params={}):
+		res = self.session.get(self.url + "/api/resource/" + resource + "/",
+			params=params)
 		return self.post_process(res)
 
 	def rename_doc(self, doctype, old_name, new_name):
@@ -202,7 +207,7 @@ class FrappeClient(object):
 		try:
 			rjson = response.json()
 		except ValueError:
-			print response.text
+			print(response.text)
 			raise
 
 		if rjson and ("exc" in rjson) and rjson["exc"]:
@@ -225,7 +230,7 @@ class FrappeClient(object):
 			try:
 				rjson = response.json()
 			except ValueError:
-				print response.text
+				print(response.text)
 				raise
 
 			if rjson and ("exc" in rjson) and rjson["exc"]:
