@@ -2,17 +2,21 @@ import requests
 import json
 from io import StringIO
 
+
 class AuthError(Exception):
     pass
 
+
 class FrappeException(Exception):
     pass
+
 
 class NotUploadableException(FrappeException):
     def __init__(self, doctype):
         self.message = "The doctype `{1}` is not uploadable, so you can't download the template".format(doctype)
 
 CAN_DOWNLOAD = []
+
 
 class FrappeClient(object):
     def __init__(self, url, username, password):
@@ -108,6 +112,9 @@ class FrappeClient(object):
             params["fields"] = json.dumps(fields)
 
         return self.get_resource(doctype, params)
+
+    def get_doc_by_name(self, doctype, name=""):
+        return self.get_resource(doctype, name)
 
     def get_resource(self, resource, params={}):
         res = self.session.get(self.url + "/api/resource/" + resource + "/",

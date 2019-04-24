@@ -1,1 +1,3 @@
 v0.1, 11th July 2014 -- Initial Release
+v0.2, 2019-04-23 -- Tabs to spaces
+v0.3, 2019-04-23 -- python3 branch
