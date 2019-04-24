@@ -114,8 +114,9 @@ class FrappeClient(object):
         return self.get_resource(doctype, params)
 
     def get_doc_by_name(self, doctype, name=""):
-        res = self.session.get(self.url + "/api/resource/" + doctype + "/",
-                               name)
+        request_str = self.url + "/api/resource/" + doctype + "/" + name
+        res = self.session.get(request_str)
+
         return self.post_process(res)
 
     def get_resource(self, resource, params={}):
