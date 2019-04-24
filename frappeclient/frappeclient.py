@@ -53,7 +53,7 @@ class FrappeClient(object):
 
     def insert(self, doc):
         res = self.session.post(self.url + "/api/resource/" + doc.get("doctype"),
-            data={"data":json.dumps(doc)})
+                                data={"data":json.dumps(doc)})
         return self.post_process(res)
 
     def update(self, doc):
@@ -114,11 +114,13 @@ class FrappeClient(object):
         return self.get_resource(doctype, params)
 
     def get_doc_by_name(self, doctype, name=""):
-        return self.get_resource(doctype, name)
+        res = self.session.get(self.url + "/api/resource/" + doctype + "/",
+                               name)
+        return self.post_process(res)
 
     def get_resource(self, resource, params={}):
         res = self.session.get(self.url + "/api/resource/" + resource + "/",
-            params=params)
+                               params=params)
         return self.post_process(res)
 
     def rename_doc(self, doctype, old_name, new_name):
